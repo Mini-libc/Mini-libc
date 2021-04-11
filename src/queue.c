@@ -3,6 +3,8 @@
 Queue *createQueue()
 {
     Queue *q = malloc(sizeof(Queue));
+    if (q == NULL)
+        errx(EXIT_FAILURE, "Cannot create queue");
     q->front = NULL;
     q->rear = NULL;
     return q;
@@ -11,6 +13,8 @@ Queue *createQueue()
 QueueNode *createNode(void *dataptr)
 {
     QueueNode *qN = malloc(sizeof(QueueNode));
+    if (qN == NULL)
+        errx(EXIT_FAILURE, "Cannot create queue node");
     qN->dataptr = dataptr;
     qN->next = NULL;
     return qN;
