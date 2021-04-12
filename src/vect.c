@@ -98,7 +98,7 @@ int isCollinear(Vect *v, Vect *v2)
     double coeff = v->co[0] / v2->co[0]; // get ratio from first coordinates
     for(size_t i = 1; i < v->dim; i++)
     {
-        if(v->co[i] / v2->co[i] - coeff > 0.0e3) // if ratio is different, not collinear
+        if(fabs(v->co[i] / v2->co[i] - coeff) > 0.0e3) // if ratio is different, not collinear
             return 0;
     }
     return 1;
