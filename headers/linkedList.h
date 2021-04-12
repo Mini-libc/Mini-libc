@@ -9,12 +9,9 @@ typedef struct List
     // Pointer to next element
     struct List *next;
 
-    // Data for element, can be anything
-    void *data;
+    // Data for element
+    int *data;
 
-    // Total size of the List
-    // An empty List has a size = -1
-    int len;
 } List;
 
 // Return a pointer to the sentinel of a new empty linked List
@@ -22,7 +19,7 @@ List *listNew();
 
 // Insert elmt at the begining of list (after sentinel)
 // Elmt already exists and list can be empty
-List *listPushFront(List *list, List *elmt);
+void listPushFront(List *list, List *elmt);
 
 // Get and remove the first element of the List (not the sentinel)
 // Does not free nor malloc anything
@@ -32,14 +29,14 @@ List *listPopFront(List *list);
 // Find the first node in List that has the same data as toFind
 // Does not free (or remove) nor malloc anything
 // If no node is found, return NULL
-List *listFindValue(List *list, void *toFind);
+List *listFindValue(List *list, int toFind);
 
 // Find the element at the given position pos
 List *listFindPos(List *list, int pos);
 
 // Return true if the list is sorted in increasing order
 // Otherwise, return false
-List *listIsSorted(List *list);
+int listIsSorted(List *list);
 
 // Insert elmt in the sorted list (keeping the List sorted)
 // elmt already exists
@@ -55,7 +52,7 @@ void listReverse(List *list);
 void listHalfSplit(List *list, List *second);
 
 // Free every node of the list (including the sentinel)
-void listFree(List *list)
+void listFree(List *list);
 
 
 #endif
