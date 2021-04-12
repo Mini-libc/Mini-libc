@@ -91,3 +91,20 @@ void vectNormalize(Vect *v)
     for(size_t i = 0; i < v->dim; i++)
         v->co[i] *= sum;
 }
+
+int isCollinear(Vect *v, Vect *v2)
+{
+    assert(v->dim > 0 && v->dim == v2->dim);
+    double coeff = v->co[0] / v2->co[0]; // get ratio from first coordinates
+    for(size_t i = 1; i < v->dim; i++)
+    {
+        if(v->co[i] / v2->co[i] - coeff > 0.0e3) // if ratio is different, not collinear
+            return 0;
+    }
+    return 1;
+}
+
+int isOrthogonal(Vect *v, Vect *v2)
+{
+    return dotProduct(v, v2) < 0.0e3;
+}
