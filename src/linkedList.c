@@ -16,6 +16,17 @@ List *listNew()
     return list;
 }
 
+
+void ListFree(List *list)
+{
+    while (list != NULL)
+    {
+        Lsit *next = list->next;
+        free(list);
+        list = n;
+    }
+}
+
 int main(void)
 {
     return 1;
