@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-// Singlely linked list
+// Singly linked list
 // Has a sentinel
 // If empty : only a sentinel
 typedef struct List
@@ -53,5 +53,9 @@ void listReverse(List *list);
 // 'second' is an empty List
 // Does not free nor malloc anything
 void listHalfSplit(List *list, List *second);
+
+// Free every node of the list (including the sentinel)
+void listFree(List *list)
+
 
 #endif
