@@ -3,9 +3,10 @@
 
 CC := gcc
 CFLAGS := -std=c99 -g -Wall -Wextra -fsanitize=address
-LDFLAGS :=
+LDFLAGS := -lm
 
-FLAGS := $(CFLAGS) $(LDFLAGS)
+FLAGS := $(CFLAGS)
+LINKFLAGS := $(LDFLAGS)
 
 EXEC := main
 SOURCEDIR := src
@@ -23,7 +24,7 @@ OBJECTS := $(patsubst $(SOURCEDIR)/%.c, $(OBJECTSDIR)/%.o, $(SOURCES))
 all: $(EXEC)
 
 $(EXEC): $(OBJECTSDIR)/$(OBJECTS)
-	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) -o $(EXEC)
+	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) $(LINKFLAGS) -o $(EXEC)
 
 $(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) -c $< -o $@
@@ -34,8 +35,7 @@ list:
 clean:
 	$(RM) -r $(OBJECTSDIR)/* $(EXEC)
 
-remake:
-	clean all
+remake: clean all
 
 init:
 	@mkdir -p $(SOURCEDIR) $(HEADERDIR) $(OBJECTSDIR)
