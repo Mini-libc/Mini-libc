@@ -2,18 +2,24 @@
 # make init to create directories
 
 CC := gcc
-CFLAGS := -std=c99 -g -Wall -Wextra -fsanitize=address
+CFLAGS := -std=c99 -Wall -Wextra -fsanitize=address
 LDFLAGS :=
 
-FLAGS := $(CFLAGS) $(LDFLAGS)
+FLAGS := $(CFLAGS)
+LINKFLAGS := $(LDFLAGS)
+DEBUGFLAGS := $(FLAGS) -g -O0 -DDEBUG
+TESTFLAGS := $(FLAGS) -lcriterion
 
 EXEC := main
+TEST := test
 SOURCEDIR := src
 HEADERDIR := headers
 OBJECTSDIR := obj
 
+EXECOBJ := $(OBJECTSDIR)/$(EXEC).o
+TESTOBJ := $(OBJECTSDIR)/$(TEST).o
 
-SOURCES := $(shell find $(SOURCEDIR) -name '*.c' 2>&1)
+SOURCES := $(shell find $(SOURCEDIR) -name '*.c' ! -name "$(TEST).c" ! -name "$(EXEC).c" 2>&1)
 OBJECTS := $(patsubst $(SOURCEDIR)/%.c, $(OBJECTSDIR)/%.o, $(SOURCES))
 
 
@@ -22,20 +28,27 @@ OBJECTS := $(patsubst $(SOURCEDIR)/%.c, $(OBJECTSDIR)/%.o, $(SOURCES))
 
 all: $(EXEC)
 
-$(EXEC): $(OBJECTSDIR)/$(OBJECTS)
-	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) -o $(EXEC)
+$(EXEC): $(OBJECTSDIR)/$(OBJECTS) $(EXECOBJ)
+	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) $(EXECOBJ) $(LINKFLAGS) -o $(EXEC)
 
-$(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c
+#$(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c
+#	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) -c $< -o $@
+
+test : $(TEST)
+
+$(TEST): $(OBJECTSDIR)/$(OBJECTS) $(TESTOBJ)
+	$(CC) $(TESTFLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) $(TESTOBJ) $(LINKFLAGS) -o $(TEST)
+
+$(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c 
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) -c $< -o $@
 
 list:
 	@echo $(SOURCES)
 	@echo $(OBJECTS)
 clean:
-	$(RM) -r $(OBJECTSDIR)/* $(EXEC)
+	$(RM) -r $(OBJECTSDIR)/* $(EXEC) $(TEST)
 
-remake:
-	clean all
+remake: clean all
 
 init:
 	@mkdir -p $(SOURCEDIR) $(HEADERDIR) $(OBJECTSDIR)
