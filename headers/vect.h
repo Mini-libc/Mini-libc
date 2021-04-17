@@ -1,3 +1,6 @@
+#ifndef VECT_H
+#define VECT_H
+
 #include <stdlib.h>
 #include <malloc.h>
 #include <err.h>
@@ -23,3 +26,5 @@ void vectNormalize(Vect *v); // set the lenght of v to 1
 
 int isCollinear(Vect *v, Vect *v2);
 int isOrthogonal(Vect *v, Vect *v2);
+
+#endif
