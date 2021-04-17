@@ -27,7 +27,7 @@ TESTOBJECTS := $(filter-out $(OBJECTSDIR)/$(EXEC).o, $(OBJECTS)) # exclude exec
 .PHONY: all clean remake init
 .DELETE_ON_ERROR:
 
-all: $(EXEC)
+all: init $(EXEC)
 
 $(EXEC): $(OBJECTSDIR)/$(OBJECTS)
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) $(LINKFLAGS) -o $(EXEC)
@@ -36,7 +36,7 @@ $(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) -c $< -o $@
 
 
-test : $(TESTS)
+test: init $(TESTS)
 
 $(TESTS): $(TESTOBJECTS)
 	$(CC) $(TESTFLAGS) -I$(HEADERDIR) -I$(TESTDIR) $(TESTOBJECTS) $(TESTS) $(LINKFLAGS) -o $(TEST)
