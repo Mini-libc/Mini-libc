@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <stdlib.h>
 #include <assert.h>
@@ -26,3 +27,4 @@ void *vectorRemove(Vector *v, size_t i); // return the struct at indice i and mo
 
 int vectorIsEmpty(Vector *v);
 
+#endif
