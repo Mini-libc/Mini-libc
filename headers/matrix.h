@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -28,3 +29,4 @@ int matIsDiagonal(Matrix *m);
 
 void matPrint(Matrix *m);
 
+#endif
