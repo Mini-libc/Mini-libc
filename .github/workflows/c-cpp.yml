@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*}
     - name: make
       run: make
 
@@ -20,5 +22,7 @@ jobs:
     name: Unit tests
     steps:
     - uses: actions/checkout@v2
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*}
     - name: Run tests
       run: make test
