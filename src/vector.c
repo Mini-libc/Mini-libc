@@ -42,6 +42,9 @@ void vectorPush(Vector *v, void *dataPtr)
 
 void *vectorPop(Vector *v)
 {
+    if(v->length == 0)
+        return NULL;
+
     void *result = v->data[v->length - 1];
     v->length--;
 
@@ -59,7 +62,9 @@ void *vectorGet(Vector *v, size_t i)
 
 void vectorInsert(Vector *v, size_t i, void *dataPtr)
 {
-    assert(i < v->length);
+    if(i >= v->length)
+        return vectorPush(v, dataPtr);
+
     v->length++;
 
     if(v->length == v->capacity)
@@ -72,6 +77,12 @@ void vectorInsert(Vector *v, size_t i, void *dataPtr)
 
 void *vectorRemove(Vector *v, size_t i)
 {
+    if(v->length == 0)
+        return NULL;
+
+    if(i >= v->length)
+        return vectorPop(v);
+
     void *result = v->data[i];
 
     for(size_t j = i; j < v->length; j++)

@@ -16,13 +16,23 @@ jobs:
     - name: make
       run: make
 
-  tests:
+      #  tests:
 
-    runs-on: ubuntu-latest
-    name: Unit tests
-    steps:
-    - uses: actions/checkout@v2
-    - name: Branch name
-      run: echo running on branch ${GITHUB_REF##*/}
-    - name: Run tests
-      run: make test
+      #runs-on: ubuntu-latest
+      #name: Unit tests
+      #steps:
+      #- uses: actions/checkout@v2
+      #- name: Branch name
+      #run: echo running on branch ${GITHUB_REF##*/}
+      #- name: Run tests
+      #run: make test
+
+      #format:
+
+      #runs-on: ubuntu-latest
+      #steps:
+      #- uses: actions/checkouot@v2
+      #- name: Branch name
+      #run: echo runnin on branch $(GITHUB_REF##*/)
+      #- name: clang-format
+      #run: ?

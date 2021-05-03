@@ -1,5 +1,5 @@
 # Attempt at a somewhat automatic Makefile
-# make init to create directories
+# make prep to create directories
 
 CC := gcc
 CFLAGS := -std=c99 -g -Wall -Wextra -fsanitize=address
@@ -24,10 +24,10 @@ TESTS := $(shell find $(TESTDIR) -name '*.c' 2>&1)
 TESTOBJECTS := $(filter-out $(OBJECTSDIR)/$(EXEC).o, $(OBJECTS)) # exclude exec
 
 
-.PHONY: all clean remake init
+.PHONY: all clean remake prep
 .DELETE_ON_ERROR:
 
-all: init $(EXEC)
+all: prep $(EXEC)
 
 $(EXEC): $(OBJECTSDIR)/$(OBJECTS)
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) $(OBJECTS) $(LINKFLAGS) -o $(EXEC)
@@ -36,7 +36,7 @@ $(OBJECTSDIR)/%.o: $(SOURCEDIR)/%.c
 	$(CC) $(FLAGS) -I$(HEADERDIR) -I$(SOURCEDIR) -c $< -o $@
 
 
-test: init $(TESTS)
+test: prep $(TESTS)
 
 $(TESTS): $(TESTOBJECTS)
 	$(CC) $(TESTFLAGS) -I$(HEADERDIR) -I$(TESTDIR) $(TESTOBJECTS) $(TESTS) $(LINKFLAGS) -o $(TEST)
@@ -53,5 +53,7 @@ clean:
 
 remake: clean all
 
-init:
-	@mkdir -p $(SOURCEDIR) $(HEADERDIR) $(OBJECTSDIR) $(TESTSDIR)
+prep: $(SOURCEDIR)/ $(HEADERDIR)/ $(OBJECTSDIR)/ $(TESTSDIR)/
+
+%/:
+	@mkdir -p $@
