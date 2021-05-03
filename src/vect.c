@@ -1,5 +1,4 @@
-#include "../headers/vect.h"
-
+#include "vect.h"
 
 Vect *createVect(size_t dimension)
 {
@@ -98,7 +97,7 @@ int isCollinear(Vect *v, Vect *v2)
     double coeff = v->co[0] / v2->co[0]; // get ratio from first coordinates
     for(size_t i = 1; i < v->dim; i++)
     {
-        if(v->co[i] / v2->co[i] - coeff > 0.0e3) // if ratio is different, not collinear
+        if(fabs(v->co[i] / v2->co[i] - coeff) > 10e-5) // if ratio is different, not collinear
             return 0;
     }
     return 1;
@@ -106,5 +105,5 @@ int isCollinear(Vect *v, Vect *v2)
 
 int isOrthogonal(Vect *v, Vect *v2)
 {
-    return dotProduct(v, v2) < 0.0e3;
+    return fabs(dotProduct(v, v2)) < 10e-5;
 }
